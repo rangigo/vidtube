@@ -69,7 +69,7 @@ app.use((req, res, next) => {
 
 // Main route
 app.get('/', (req, res) => {
-  const title = 'Phuoc'
+  const title = req.user ? req.user.name : 'guest'
   res.render('index', {
     title: title,
   })

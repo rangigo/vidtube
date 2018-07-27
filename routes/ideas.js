@@ -70,7 +70,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
     new Idea(newIdea)
       .save()
       .then(idea => {
-        req.flash('success_msg', 'Video added!')
+        req.flash('success_msg', 'Video idea added!')
         res.redirect('/ideas')
       })
       .catch(err => console.log(err))
