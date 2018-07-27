@@ -17,10 +17,13 @@ const users = require('./routes/users')
 // Load Passport Config
 require('./config/passport')(passport)
 
+// Db config
+const db = require('./config/database')
+
 // Connect to mongoose
 mongoose
   .connect(
-    'mongodb://rangigo:Panigo010697@ds247121.mlab.com:47121/rangigo',
+    db.mongoURI,
     { useNewUrlParser: true },
   )
   .then(() => console.log('MongoDB connected'))
@@ -34,7 +37,7 @@ app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// Static Folder 
+// Static Folder
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Method Override Middleware
@@ -62,7 +65,7 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error')
   res.locals.user = req.user || null
   next()
-})  
+})
 
 // Main route
 app.get('/', (req, res) => {
@@ -82,7 +85,7 @@ app.use('/ideas', ideas)
 app.use('/users', users)
 
 // Listen to server
-const port = 8000
+const port = process.env.PORT || 8000
 
 app.listen(port, () => {
   console.log(`Server is starting on ${port}`)
